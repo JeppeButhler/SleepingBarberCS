@@ -5,6 +5,15 @@
     <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>SleepingBarber</AssemblyName>
     <RootNamespace>SleepingBarber</RootNamespace>
+    <Authors>Jeppe Buthler</Authors>
+    <Company />
+    <Product />
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Application\**" />
+    <EmbeddedResource Remove="Application\**" />
+    <None Remove="Application\**" />
+  </ItemGroup>
 
 </Project>

@@ -16,7 +16,7 @@ namespace SleepingBarber
         public Customer()
         {
             _id = _id_s++;
-            _gatekeeper = new Semaphore(1, 1);
+            _gatekeeper = new Semaphore(0, 1);
             Acquire();
         }
 
@@ -32,7 +32,7 @@ namespace SleepingBarber
 
         public void Shave()
         {
-            Console.WriteLine("{_id} has been shaved.");
+            Console.WriteLine($"{_id} has been shaved.");
         }
 
         public int GetID()
