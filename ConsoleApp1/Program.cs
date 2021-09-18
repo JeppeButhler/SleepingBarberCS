@@ -22,13 +22,13 @@ namespace SleepingBarber
 
         public void StartWorkDay()
         {
+            new Thread(new ThreadStart(Run)).Start();
+
             for (int i = 0; i < _NumberOfBarbers; i++)
             {
                 _Workers[i] = new Barber(_WaitingRoom);
                 _Workers[i].Run();
             }
-
-            new Thread(new ThreadStart(Run)).Start();
         }
 
         public void Run()
@@ -38,8 +38,9 @@ namespace SleepingBarber
             {
                 try
                 {
-                    _WaitingRoom.SeatCustomer(new Customer());
-                    Thread.Sleep(new Random().Next(0, 10000));
+                    Customer customer = new Customer();
+                    _WaitingRoom.SeatCustomer(customer);
+                    Thread.Sleep(2500 * new Random().Next(0, 10000));
                 } catch (ThreadInterruptedException e)
                 {
                     Console.WriteLine(e.ToString());

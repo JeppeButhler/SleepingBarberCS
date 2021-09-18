@@ -9,32 +9,32 @@ namespace SleepingBarber
 {
     class CustomerCounter
     {
-        private static CustomerCounter instance;
-        private int CustomersFinished = 0;
-        private Semaphore gatekeeper;
+        private static CustomerCounter _Instance;
+        private int _CustomersFinished = 0;
+        private Semaphore _Gatekeeper;
 
         private CustomerCounter()
         {
-            gatekeeper = new Semaphore(0, 1);
+            _Gatekeeper = new Semaphore(1, 1);
         }
 
         public static CustomerCounter GetInstance()
         {
-            if(instance == null)
+            if(_Instance == null)
             {
-                instance = new CustomerCounter();
+                _Instance = new CustomerCounter();
             }
-            return instance;
+            return _Instance;
         }
 
         public void Increment()
         {
             try
             {
-                gatekeeper.WaitOne();
-                ++CustomersFinished;
-                Console.WriteLine($"+1: {CustomersFinished} persons have left the barbershop.");
-                gatekeeper.Release();
+                _Gatekeeper.WaitOne();
+                ++_CustomersFinished;
+                Console.WriteLine($"+1: {_CustomersFinished} persons have left the barbershop.");
+                _Gatekeeper.Release();
             } catch (ThreadInterruptedException e)
             {
                 Console.WriteLine(e.ToString());
@@ -46,9 +46,9 @@ namespace SleepingBarber
             int ValueToReturn = -1;
             try
             {
-                gatekeeper.WaitOne();
-                ValueToReturn = CustomersFinished;
-                gatekeeper.Release();
+                _Gatekeeper.WaitOne();
+                ValueToReturn = _CustomersFinished;
+                _Gatekeeper.Release();
             } catch (ThreadInterruptedException e)
             {
                 Console.WriteLine(e.ToString());

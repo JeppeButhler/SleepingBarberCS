@@ -17,7 +17,7 @@ namespace SleepingBarber
         private WaitingRoom()
         {
             _CustomerQueue = new Queue<Customer>(_NumberOfChairs);
-            _Gatekeeper = new Semaphore(0, 1);
+            _Gatekeeper = new Semaphore(1, 1);
         }
 
         public static WaitingRoom GetInstance()
@@ -31,31 +31,30 @@ namespace SleepingBarber
 
         public void SeatCustomer(Customer customer)
         {
-            try
+            _Gatekeeper.WaitOne();
+            if (_CustomerQueue.Count() < _NumberOfChairs)
             {
-                _Gatekeeper.WaitOne();
-                if(_CustomerQueue.Count() < _NumberOfChairs)
-                {
-                    _CustomerQueue.Enqueue(customer);
-                    Console.WriteLine($"Customer {customer.GetID()} was seated in waiting room.");
-                } else
-                {
-                    Console.WriteLine($"There was not seat available for customer {customer.GetID()}");
-                }
-                _Gatekeeper.Release();
-            } catch (ThreadInterruptedException e)
-            {
-                Console.WriteLine(e.ToString());
+                _CustomerQueue.Enqueue(customer);
+                Console.WriteLine($"Customer {customer.GetID()} was seated in waiting room.");
             }
+            else
+            {
+                Console.WriteLine($"There was not seat available for customer {customer.GetID()}");
+            }
+            _Gatekeeper.Release();
         }
 
         public Customer UnseatCustomer()
         {
-            Customer nextCustomer = _CustomerQueue.Dequeue();
-            if(nextCustomer != null)
+            Customer nextCustomer = null;
+            if (!IsQueueEmpty())
             {
-                Console.WriteLine($"It's customer {nextCustomer.GetID()}'s turn.");
-                nextCustomer.Release();
+                nextCustomer = _CustomerQueue.Dequeue();
+                if (nextCustomer != null)
+                {
+                    Console.WriteLine($"It's customer {nextCustomer.GetID()}'s turn.");
+                    nextCustomer.Release();
+                }
             }
             return nextCustomer;
         }

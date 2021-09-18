@@ -16,7 +16,7 @@ namespace SleepingBarber
         public Customer()
         {
             _Id = _Id_s++;
-            _Gatekeeper = new Semaphore(0, 1);
+            _Gatekeeper = new Semaphore(1, 1);
             Acquire();
         }
 
