@@ -33,9 +33,9 @@ namespace SleepingBarber
             customer.Release();
         }
 
-        public static Boolean IsOccupied()
+        public Boolean IsOccupied()
         {
-            return Thread.CurrentThread.ThreadState == ThreadState.Running;
+            return _State == States.WORKING;
         }
 
         public void WakeBarber()
