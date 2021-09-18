@@ -32,7 +32,7 @@ namespace SleepingBarber
 
         public void Shave()
         {
-            Console.WriteLine($"{_Id} has been shaved.");
+            Console.WriteLine($"Customer {_Id} has been shaved.");
         }
 
         public int GetID()
