@@ -38,8 +38,7 @@ namespace SleepingBarber
             {
                 try
                 {
-                    Customer customer = new Customer();
-                    _WaitingRoom.SeatCustomer(customer);
+                    _WaitingRoom.SeatCustomer(new Customer());
                     Thread.Sleep(2500 * new Random().Next(0, 10000));
                 } catch (ThreadInterruptedException e)
                 {

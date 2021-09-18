@@ -28,7 +28,7 @@ namespace SleepingBarber
             Random randomizer = new Random();
             customer.Acquire();
             Console.WriteLine($"Barber {_Id} started shaving customer {customer.GetID()}.");
-            Thread.Sleep(2000 * randomizer.Next(0, 1000));
+            Thread.Sleep(new Random().Next(0, 10000));
             customer.Shave();
             customer.Release();
         }

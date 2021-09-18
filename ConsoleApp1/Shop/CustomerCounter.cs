@@ -20,7 +20,7 @@ namespace SleepingBarber
 
         public static CustomerCounter GetInstance()
         {
-            if(_Instance == null)
+            if (_Instance == null)
             {
                 _Instance = new CustomerCounter();
             }
@@ -35,7 +35,8 @@ namespace SleepingBarber
                 ++_CustomersFinished;
                 Console.WriteLine($"+1: {_CustomersFinished} persons have left the barbershop.");
                 _Gatekeeper.Release();
-            } catch (ThreadInterruptedException e)
+            }
+            catch (ThreadInterruptedException e)
             {
                 Console.WriteLine(e.ToString());
             }
@@ -44,15 +45,9 @@ namespace SleepingBarber
         public int CustomerCount()
         {
             int ValueToReturn = -1;
-            try
-            {
-                _Gatekeeper.WaitOne();
-                ValueToReturn = _CustomersFinished;
-                _Gatekeeper.Release();
-            } catch (ThreadInterruptedException e)
-            {
-                Console.WriteLine(e.ToString());
-            }
+            _Gatekeeper.WaitOne();
+            ValueToReturn = _CustomersFinished;
+            _Gatekeeper.Release();
             return ValueToReturn;
         }
     }
