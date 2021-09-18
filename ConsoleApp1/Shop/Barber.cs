@@ -11,13 +11,16 @@ namespace SleepingBarber
     {
         private static int _Id_s = 1;
         private int _Id = -1;
-        private ThreadState _State = ThreadState.Stopped;
+        private States _State = States.SLEEPING;
+        private CustomerCounter _CustomerCounter;
         private WaitingRoom _WaitingRoom;
 
         public Barber(WaitingRoom waitingRoom)
         {
             _Id = _Id_s++;
+            this._CustomerCounter = CustomerCounter.GetInstance();
             this._WaitingRoom = waitingRoom;
+            Sleep();
         }
 
         public void GiveHaircut(Customer customer)
@@ -37,13 +40,14 @@ namespace SleepingBarber
 
         public void WakeBarber()
         {
-            _State = ThreadState.Running;
-            Console.WriteLine($"The barber {Id} woke up.");
+            _State = States.WORKING;
+            Console.WriteLine($"Barber {_Id} woke up.");
         }
 
         public void Sleep()
         {
-            _State = ThreadState.Stopped;
+            _State = States.SLEEPING;
+            Console.WriteLine($"Barber {_Id} went to sleep.");
         }
 
         public int GetID()
@@ -53,7 +57,37 @@ namespace SleepingBarber
 
         public void Run()
         {
-
+            while(_CustomerCounter.CustomerCount() < 10)
+            {
+                Customer customer = _WaitingRoom.UnseatCustomer();
+                if(customer != null)
+                {
+                    if (_State == States.SLEEPING)
+                    {
+                        WakeBarber();
+                    }
+                    try
+                    {
+                        GiveHaircut(customer);
+                    } catch (ThreadInterruptedException e)
+                    {
+                        Console.WriteLine(e.ToString());
+                    }
+                } else
+                {
+                    if(_State == States.WORKING)
+                    {
+                        _State = States.SLEEPING;
+                        Console.WriteLine($"Barber {GetID()} went to sleep.");
+                    }
+                }
+            }
+            Console.WriteLine("All work is done!");
         }
+    }
+    
+    public enum States
+    {
+        SLEEPING, WORKING
     }
 }

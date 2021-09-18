@@ -9,35 +9,35 @@ namespace SleepingBarber
 {
     class Customer
     {
-        private static int _id_s;
-        private int _id;
-        private Semaphore _gatekeeper;
+        private static int _Id_s;
+        private int _Id;
+        private Semaphore _Gatekeeper;
 
         public Customer()
         {
-            _id = _id_s++;
-            _gatekeeper = new Semaphore(0, 1);
+            _Id = _Id_s++;
+            _Gatekeeper = new Semaphore(0, 1);
             Acquire();
         }
 
         public void Acquire()
         {
-            _gatekeeper.WaitOne();
+            _Gatekeeper.WaitOne();
         }
 
         public void Release()
         {
-            _gatekeeper.Release();
+            _Gatekeeper.Release();
         }
 
         public void Shave()
         {
-            Console.WriteLine($"{_id} has been shaved.");
+            Console.WriteLine($"{_Id} has been shaved.");
         }
 
         public int GetID()
         {
-            return _id;
+            return _Id;
         }
     }
 }

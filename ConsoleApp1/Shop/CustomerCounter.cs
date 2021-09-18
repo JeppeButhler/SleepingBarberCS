@@ -33,7 +33,7 @@ namespace SleepingBarber
             {
                 gatekeeper.WaitOne();
                 ++CustomersFinished;
-                Console.WriteLine($"+1: {CustomersFinished} left the barbershop.");
+                Console.WriteLine($"+1: {CustomersFinished} persons have left the barbershop.");
                 gatekeeper.Release();
             } catch (ThreadInterruptedException e)
             {
