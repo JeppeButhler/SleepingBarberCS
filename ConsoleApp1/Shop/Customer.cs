@@ -33,6 +33,7 @@ namespace SleepingBarber
         public void Shave()
         {
             Console.WriteLine($"Customer {_Id} has been shaved.");
+            CustomerCounter.GetInstance().Increment();
         }
 
         public int GetID()

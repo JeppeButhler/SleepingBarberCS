@@ -71,8 +71,8 @@ namespace SleepingBarber
                     {
                         Sleep();
                     }
-                    Console.WriteLine("All work is done!");
                 }
+                else if(customer == null) { Console.WriteLine("All work is done!"); }
             }
         }
 
