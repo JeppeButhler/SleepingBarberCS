@@ -26,7 +26,7 @@ namespace SleepingBarber
         public void GiveHaircut(Customer customer)
         {
             Random randomizer = new Random();
-            customer.Acquire();
+            //customer.Acquire();
             Console.WriteLine($"Barber {_Id} started shaving customer {customer.GetID()}.");
             Thread.Sleep(new Random().Next(0, 10000));
             customer.Shave();
@@ -65,6 +65,7 @@ namespace SleepingBarber
                     Customer customer = _WaitingRoom.UnseatCustomer();
                     if (customer != null)
                     {
+                        customer.Acquire();
                         if (_State == States.SLEEPING)
                         {
                             WakeBarber();

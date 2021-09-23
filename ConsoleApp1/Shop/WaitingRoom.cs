@@ -47,15 +47,17 @@ namespace SleepingBarber
         public Customer UnseatCustomer()
         {
             Customer nextCustomer = null;
+            _Gatekeeper.WaitOne();
             if (!IsQueueEmpty())
             {
                 nextCustomer = _CustomerQueue.Dequeue();
                 if (nextCustomer != null)
                 {
-                    Console.WriteLine($"It's customer {nextCustomer.GetID()}'s turn.");
                     nextCustomer.Release();
+                    Console.WriteLine($"It's customer {nextCustomer.GetID()}'s turn.");
                 }
             }
+            _Gatekeeper.Release();
             return nextCustomer;
         }
 

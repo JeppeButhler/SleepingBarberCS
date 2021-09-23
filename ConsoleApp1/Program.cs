@@ -33,13 +33,18 @@ namespace SleepingBarber
 
         public void Run()
         {
-            int index = 0;
-            while(index++ < 50 && CustomerCounter.GetInstance().CustomerCount() < 50)
+            int index = 1;
+            int numOfCustomers = 50;
+            while(index++ < numOfCustomers && CustomerCounter.GetInstance().CustomerCount() < 50)
             {
                 try
                 {
                     _WaitingRoom.SeatCustomer(new Customer());
-                    Thread.Sleep(new Random().Next(0, 10000));
+                    Thread.Sleep(new Random().Next(0, 1000));
+                    if(index == numOfCustomers)
+                    {
+                        Console.WriteLine("Workday over, shop is now closing.");
+                    }
                 } catch (ThreadInterruptedException e)
                 {
                     Console.WriteLine(e.ToString());
