@@ -57,24 +57,27 @@ namespace SleepingBarber
 
         public void Run()
         {
-            int numOfCustomersToShavePerDay = 50;
-            while (_CustomerCounter.CustomerCount() < numOfCustomersToShavePerDay)
+            Task.Run(() =>
             {
-                Customer customer = _WaitingRoom.UnseatCustomer();
-                if (customer != null)
+                int numOfCustomersToShavePerDay = 50;
+                while (_CustomerCounter.CustomerCount() < numOfCustomersToShavePerDay)
                 {
-                    if (_State == States.SLEEPING)
+                    Customer customer = _WaitingRoom.UnseatCustomer();
+                    if (customer != null)
                     {
-                        WakeBarber();
-                        GiveHaircut(customer);
+                        if (_State == States.SLEEPING)
+                        {
+                            WakeBarber();
+                            GiveHaircut(customer);
+                        }
+                        else if (_State == States.WORKING)
+                        {
+                            Sleep();
+                        }
                     }
-                    else if (_State == States.WORKING)
-                    {
-                        Sleep();
-                    }
+                    else if (customer == null && numOfCustomersToShavePerDay < _CustomerCounter.CustomerCount()) { Console.WriteLine("All work is done!"); }
                 }
-                else if(customer == null && numOfCustomersToShavePerDay < _CustomerCounter.CustomerCount()) { Console.WriteLine("All work is done!"); }
-            }
+            });
         }
 
         public enum States
