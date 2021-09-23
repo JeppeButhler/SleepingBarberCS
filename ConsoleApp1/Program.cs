@@ -39,7 +39,7 @@ namespace SleepingBarber
                 try
                 {
                     _WaitingRoom.SeatCustomer(new Customer());
-                    Thread.Sleep(250 * new Random().Next(0, 10));
+                    Thread.Sleep(new Random().Next(0, 10000));
                 } catch (ThreadInterruptedException e)
                 {
                     Console.WriteLine(e.ToString());

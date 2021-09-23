@@ -57,7 +57,8 @@ namespace SleepingBarber
 
         public void Run()
         {
-            while (_CustomerCounter.CustomerCount() < 10)
+            int numOfCustomersToShavePerDay = 50;
+            while (_CustomerCounter.CustomerCount() < numOfCustomersToShavePerDay)
             {
                 Customer customer = _WaitingRoom.UnseatCustomer();
                 if (customer != null)
@@ -72,7 +73,7 @@ namespace SleepingBarber
                         Sleep();
                     }
                 }
-                else if(customer == null) { Console.WriteLine("All work is done!"); }
+                else if(customer == null && numOfCustomersToShavePerDay < _CustomerCounter.CustomerCount()) { Console.WriteLine("All work is done!"); }
             }
         }
 
