@@ -57,7 +57,7 @@ namespace SleepingBarber
             Task.Run(() =>
             {
                 int numOfCustomersToShavePerDay = 50;
-                while (_CustomerCounter.CustomerCount() < numOfCustomersToShavePerDay || !_WaitingRoom.IsQueueEmpty())
+                while (_CustomerCounter.CustomerCount() <= numOfCustomersToShavePerDay || !_WaitingRoom.IsQueueEmpty())
                 {
                     Customer customer = _WaitingRoom.UnseatCustomer();
                     if (customer == null && _State == States.WORKING)

@@ -40,7 +40,7 @@ namespace SleepingBarber
             {
                 try
                 {
-                    if(CustomerCounter.GetInstance().CustomerCount() <= minNumOfCustomers)
+                    if(CustomerCounter.GetInstance().CustomerCount() < minNumOfCustomers)
                     {
                         _WaitingRoom.SeatCustomer(new Customer());
                         Thread.Sleep(new Random().Next(0, 5000));
