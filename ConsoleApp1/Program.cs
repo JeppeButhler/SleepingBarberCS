@@ -36,12 +36,12 @@ namespace SleepingBarber
             //int index = 1;
             bool areAllBarbersDone = false;
             int barbersFinished = 0;
-            int numOfCustomers = 50;
-            while(CustomerCounter.GetInstance().CustomerCount() < numOfCustomers || (areAllBarbersDone == false || _WaitingRoom.IsQueueEmpty() == false))
+            int minNumOfCustomers = 50;
+            while(CustomerCounter.GetInstance().CustomerCount() < minNumOfCustomers || (areAllBarbersDone == false || _WaitingRoom.IsQueueEmpty() == false))
             {
                 try
                 {
-                    if(CustomerCounter.GetInstance().CustomerCount() <= numOfCustomers)
+                    if(CustomerCounter.GetInstance().CustomerCount() <= minNumOfCustomers)
                     {
                         _WaitingRoom.SeatCustomer(new Customer());
                         Thread.Sleep(new Random().Next(0, 5000));
