@@ -22,19 +22,19 @@ namespace SleepingBarber
 
         public void StartWorkDay()
         {
-            new Thread(new ThreadStart(Run)).Start();
-
             for (int i = 0; i < _NumberOfBarbers; i++)
             {
                 _Workers[i] = new Barber(_WaitingRoom);
                 _Workers[i].Run();
             }
+
+            new Thread(new ThreadStart(Run)).Start();
         }
 
         public void Run()
         {
             bool areAllBarbersDone = false;
-            int barbersFinished = 0;
+            int barbersFinished;
             int minNumOfCustomers = 50;
             while(CustomerCounter.GetInstance().CustomerCount() < minNumOfCustomers || areAllBarbersDone == false || _WaitingRoom.IsQueueEmpty() == false)
             {
@@ -43,10 +43,11 @@ namespace SleepingBarber
                     if(CustomerCounter.GetInstance().CustomerCount() < minNumOfCustomers)
                     {
                         _WaitingRoom.SeatCustomer(new Customer());
-                        Thread.Sleep(new Random().Next(0, 5000));
+                        Thread.Sleep(new Random().Next(0, 500));
                     }
-                    
-                    foreach(Barber barber in _Workers)
+
+                    barbersFinished = 0;
+                    foreach (Barber barber in _Workers)
                     {
                         if(barber.IsOccupied() == false)
                         {
