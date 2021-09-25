@@ -33,7 +33,6 @@ namespace SleepingBarber
 
         public void Run()
         {
-            //int index = 1;
             bool areAllBarbersDone = false;
             int barbersFinished = 0;
             int minNumOfCustomers = 50;
