@@ -33,23 +33,39 @@ namespace SleepingBarber
 
         public void Run()
         {
-            int index = 1;
+            //int index = 1;
+            bool areAllBarbersDone = false;
+            int barbersFinished = 0;
             int numOfCustomers = 50;
-            while(index++ < numOfCustomers && CustomerCounter.GetInstance().CustomerCount() < 50)
+            while(CustomerCounter.GetInstance().CustomerCount() < numOfCustomers || (areAllBarbersDone == false || _WaitingRoom.IsQueueEmpty() == false))
             {
                 try
                 {
-                    _WaitingRoom.SeatCustomer(new Customer());
-                    Thread.Sleep(new Random().Next(0, 5000));
-                    if(index == numOfCustomers)
+                    if(CustomerCounter.GetInstance().CustomerCount() <= numOfCustomers)
                     {
-                        Console.WriteLine("Workday over, shop is now closing.");
+                        _WaitingRoom.SeatCustomer(new Customer());
+                        Thread.Sleep(new Random().Next(0, 5000));
                     }
-                } catch (ThreadInterruptedException e)
+                    
+                    foreach(Barber barber in _Workers)
+                    {
+                        if(barber.IsOccupied() == false)
+                        {
+                            barbersFinished++;
+                        }
+                    }
+
+                    if(barbersFinished == _Workers.Length)
+                    {
+                        areAllBarbersDone = true;
+                    }
+                }
+                catch (ThreadInterruptedException e)
                 {
                     Console.WriteLine(e.ToString());
                 }
             }
+        Console.WriteLine("Workday over, shop is now closing.");
         }
     }
 }

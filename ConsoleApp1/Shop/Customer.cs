@@ -9,7 +9,7 @@ namespace SleepingBarber
 {
     class Customer
     {
-        private static int _Id_s;
+        private static int _Id_s = 1;
         private int _Id;
         private Semaphore _Gatekeeper;
 
