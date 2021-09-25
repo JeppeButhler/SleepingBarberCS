@@ -32,6 +32,7 @@ namespace SleepingBarber
 
         public void Shave()
         {
+            Thread.Sleep(new Random().Next(0, 10000));
             Console.WriteLine($"Customer {_Id} has been shaved.");
             CustomerCounter.GetInstance().Increment();
         }

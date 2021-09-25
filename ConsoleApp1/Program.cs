@@ -40,7 +40,7 @@ namespace SleepingBarber
                 try
                 {
                     _WaitingRoom.SeatCustomer(new Customer());
-                    Thread.Sleep(new Random().Next(0, 1000));
+                    Thread.Sleep(new Random().Next(0, 5000));
                     if(index == numOfCustomers)
                     {
                         Console.WriteLine("Workday over, shop is now closing.");

@@ -25,10 +25,8 @@ namespace SleepingBarber
 
         public void GiveHaircut(Customer customer)
         {
-            Random randomizer = new Random();
             //customer.Acquire();
             Console.WriteLine($"Barber {_Id} started shaving customer {customer.GetID()}.");
-            Thread.Sleep(new Random().Next(0, 10000));
             customer.Shave();
             customer.Release();
         }
@@ -63,18 +61,18 @@ namespace SleepingBarber
                 while (_CustomerCounter.CustomerCount() < numOfCustomersToShavePerDay)
                 {
                     Customer customer = _WaitingRoom.UnseatCustomer();
-                    if (customer != null)
+                    if (customer == null && _State == States.WORKING)
+                    {
+                        Sleep();
+                    }
+                    else if (customer != null)
                     {
                         customer.Acquire();
                         if (_State == States.SLEEPING)
                         {
                             WakeBarber();
-                            GiveHaircut(customer);
                         }
-                        else if (_State == States.WORKING)
-                        {
-                            Sleep();
-                        }
+                        GiveHaircut(customer);
                     }
                     else if (customer == null && numOfCustomersToShavePerDay < _CustomerCounter.CustomerCount()) { Console.WriteLine("All work is done!"); }
                 }
