@@ -37,7 +37,7 @@ namespace SleepingBarber
             bool areAllBarbersDone = false;
             int barbersFinished = 0;
             int minNumOfCustomers = 50;
-            while(CustomerCounter.GetInstance().CustomerCount() < minNumOfCustomers || (areAllBarbersDone == false || _WaitingRoom.IsQueueEmpty() == false))
+            while(CustomerCounter.GetInstance().CustomerCount() < minNumOfCustomers || areAllBarbersDone == false || _WaitingRoom.IsQueueEmpty() == false)
             {
                 try
                 {
