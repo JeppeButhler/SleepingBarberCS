@@ -54,7 +54,8 @@ namespace SleepingBarber
 
         public void Run()
         {
-            Task.Run(() =>
+            //Task.Run(() =>
+            new Thread(new ThreadStart(() =>
             {
                 int numOfCustomersToShavePerDay = 50;
                 while (_CustomerCounter.CustomerCount() <= numOfCustomersToShavePerDay || _WaitingRoom.IsQueueEmpty() == false || _State == States.WORKING)
@@ -74,7 +75,7 @@ namespace SleepingBarber
                         GiveHaircut(customer);
                     }
                 }
-            });
+            })).Start();
         }
 
         public enum States

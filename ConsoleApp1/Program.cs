@@ -65,7 +65,7 @@ namespace SleepingBarber
                     Console.WriteLine(e.ToString());
                 }
             }
-        Console.WriteLine("Workday over, shop is now closing.");
+        Console.WriteLine("Workday over, shop is now closing, barbers are finishing up.");
         }
     }
 }
