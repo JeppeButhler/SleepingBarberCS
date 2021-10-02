@@ -54,7 +54,6 @@ namespace SleepingBarber
 
         public void Run()
         {
-            //Task.Run(() =>
             new Thread(new ThreadStart(() =>
             {
                 int numOfCustomersToShavePerDay = 50;
