@@ -37,7 +37,7 @@ namespace SleepingBarber
             int barbersFinished;
             int minNumOfCustomers = 50;
             while(CustomerCounter.GetInstance().CustomerCount() < minNumOfCustomers || areAllBarbersDone == false || _WaitingRoom.IsQueueEmpty() == false)
-            { //Think there's a problem with this while clause that makes program exit before the last customer is shaved.
+            {
                 try
                 {
                     if(CustomerCounter.GetInstance().CustomerCount() < minNumOfCustomers)
